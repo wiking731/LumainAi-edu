@@ -1,8 +1,19 @@
 import Groq from 'groq-sdk';
 
-const groq = new Groq({
-    apiKey: process.env.GROQ_API_KEY,
-});
+// Lazy initialization to avoid errors on module load
+let groq = null;
+
+function getGroqClient() {
+    if (!groq) {
+        if (!process.env.GROQ_API_KEY) {
+            throw new Error('GROQ_API_KEY environment variable is not configured');
+        }
+        groq = new Groq({
+            apiKey: process.env.GROQ_API_KEY,
+        });
+    }
+    return groq;
+}
 
 // Regular completion (non-streaming)
 export async function getGroqCompletion(messages, systemPrompt) {
@@ -14,7 +25,7 @@ export async function getGroqCompletion(messages, systemPrompt) {
         }))
     ];
 
-    const chatCompletion = await groq.chat.completions.create({
+    const chatCompletion = await getGroqClient().chat.completions.create({
         messages: chatMessages,
         model: 'llama-3.3-70b-versatile',
         temperature: 0.7,
@@ -31,7 +42,7 @@ export async function* getGroqStream(messages, systemPrompt) {
         ...messages
     ];
 
-    const stream = await groq.chat.completions.create({
+    const stream = await getGroqClient().chat.completions.create({
         messages: chatMessages,
         model: 'llama-3.3-70b-versatile',
         temperature: 0.7,

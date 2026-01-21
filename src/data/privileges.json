@@ -1,0 +1,158 @@
+{
+    "programs": [
+        {
+            "id": "yoshlar_daftari",
+            "name_uz": "Yoshlar daftari",
+            "name_ru": "Молодежный реестр",
+            "description_uz": "30 yoshgacha bo'lgan yoshlar uchun tadbirkorlik imtiyozlari",
+            "description_ru": "Льготы для предпринимателей до 30 лет",
+            "eligibility": {
+                "age_max": 30,
+                "first_business": true,
+                "sectors": [
+                    "all"
+                ]
+            },
+            "benefits": [
+                {
+                    "uz": "3 yillik soliq ta'tili",
+                    "ru": "3-летние налоговые каникулы"
+                },
+                {
+                    "uz": "100 million UZS gacha 0% kredit",
+                    "ru": "Кредит до 100 млн UZS под 0%"
+                },
+                {
+                    "uz": "Bepul biznes ro'yxatdan o'tish",
+                    "ru": "Бесплатная регистрация бизнеса"
+                }
+            ],
+            "legal_basis": "PQ-4947",
+            "apply_link": "https://yoshlardaftari.uz",
+            "active": true
+        },
+        {
+            "id": "ayollar_daftari",
+            "name_uz": "Ayollar daftari",
+            "name_ru": "Женский реестр",
+            "description_uz": "Ayol tadbirkorlar uchun maxsus imtiyozlar",
+            "description_ru": "Специальные льготы для женщин-предпринимателей",
+            "eligibility": {
+                "gender": "female",
+                "sectors": [
+                    "all"
+                ]
+            },
+            "benefits": [
+                {
+                    "uz": "Imtiyozli kreditlar (yillik 7%)",
+                    "ru": "Льготные кредиты (7% годовых)"
+                },
+                {
+                    "uz": "Bepul treninglar va seminarlar",
+                    "ru": "Бесплатные тренинги и семинары"
+                },
+                {
+                    "uz": "Grantlar dasturi (50 mln UZS gacha)",
+                    "ru": "Грантовая программа (до 50 млн UZS)"
+                }
+            ],
+            "legal_basis": "PQ-5052",
+            "apply_link": "https://ayollardaftari.uz",
+            "active": true
+        },
+        {
+            "id": "it_park",
+            "name_uz": "IT Park rezidenti",
+            "name_ru": "Резидент IT Park",
+            "description_uz": "IT sohasidagi kompaniyalar uchun soliq imtiyozlari",
+            "description_ru": "Налоговые льготы для IT-компаний",
+            "eligibility": {
+                "sectors": [
+                    "IT",
+                    "software",
+                    "tech"
+                ],
+                "registration": "IT Park"
+            },
+            "benefits": [
+                {
+                    "uz": "2028 yilgacha 0% daromad solig'i",
+                    "ru": "0% налог на прибыль до 2028 года"
+                },
+                {
+                    "uz": "1% ijtimoiy soliq (12% o'rniga)",
+                    "ru": "1% социальный налог (вместо 12%)"
+                },
+                {
+                    "uz": "Bojxona imtiyozlari",
+                    "ru": "Таможенные льготы"
+                }
+            ],
+            "legal_basis": "PQ-3832",
+            "apply_link": "https://it-park.uz/resident",
+            "active": true
+        },
+        {
+            "id": "birinchi_biznes",
+            "name_uz": "Birinchi biznes",
+            "name_ru": "Первый бизнес",
+            "description_uz": "Birinchi marta biznes boshlayotganlar uchun yordam",
+            "description_ru": "Помощь начинающим предпринимателям",
+            "eligibility": {
+                "first_business": true,
+                "sectors": [
+                    "all"
+                ]
+            },
+            "benefits": [
+                {
+                    "uz": "Bepul biznes reja tuzish",
+                    "ru": "Бесплатное составление бизнес-плана"
+                },
+                {
+                    "uz": "Mentorlik dasturi",
+                    "ru": "Программа менторства"
+                },
+                {
+                    "uz": "1 yillik buxgalteriya xizmati bepul",
+                    "ru": "Бесплатные бухгалтерские услуги на 1 год"
+                }
+            ],
+            "legal_basis": "PQ-4453",
+            "apply_link": "https://my.gov.uz/birinchi-biznes",
+            "active": true
+        },
+        {
+            "id": "qishloq_xojaligi",
+            "name_uz": "Qishloq xo'jaligi yordami",
+            "name_ru": "Поддержка сельского хозяйства",
+            "description_uz": "Fermerlar va qishloq xo'jaligi uchun imtiyozlar",
+            "description_ru": "Льготы для фермеров и сельского хозяйства",
+            "eligibility": {
+                "sectors": [
+                    "agriculture",
+                    "farming"
+                ],
+                "location": "rural"
+            },
+            "benefits": [
+                {
+                    "uz": "Yer solig'idan ozod",
+                    "ru": "Освобождение от земельного налога"
+                },
+                {
+                    "uz": "Subsidiyalangan urug'lik va o'g'itlar",
+                    "ru": "Субсидированные семена и удобрения"
+                },
+                {
+                    "uz": "Texnika lizingi (3% yillik)",
+                    "ru": "Лизинг техники (3% годовых)"
+                }
+            ],
+            "legal_basis": "PQ-4576",
+            "apply_link": "https://agro.uz/subsidies",
+            "active": true
+        }
+    ]
+}

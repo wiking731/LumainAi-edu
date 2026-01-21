@@ -1,0 +1,70 @@
+{
+    "logs": [
+        {
+            "id": "log_001",
+            "timestamp": "2025-01-21T16:40:00",
+            "status": "success",
+            "action": "ingest",
+            "title_uz": "PQ-777: Yoshlar uchun yangi imtiyozlar",
+            "title_ru": "ПП-777: Новые льготы для молодежи",
+            "source": "lex.uz",
+            "relevance_score": 95,
+            "message_uz": "Topildi va bazaga qo'shildi",
+            "message_ru": "Найдено и добавлено в базу"
+        },
+        {
+            "id": "log_002",
+            "timestamp": "2025-01-21T16:38:00",
+            "status": "skipped",
+            "action": "filter",
+            "title_uz": "PQ-776: Transport qoidalari",
+            "title_ru": "ПП-776: Правила транспорта",
+            "source": "lex.uz",
+            "relevance_score": 12,
+            "message_uz": "Tadbirkorlikga aloqador emas - o'tkazib yuborildi",
+            "message_ru": "Не относится к предпринимательству - пропущено"
+        },
+        {
+            "id": "log_003",
+            "timestamp": "2025-01-21T16:35:00",
+            "status": "success",
+            "action": "ingest",
+            "title_uz": "PQ-775: IT Park yangi shartlari",
+            "title_ru": "ПП-775: Новые условия IT Park",
+            "source": "lex.uz",
+            "relevance_score": 89,
+            "message_uz": "Topildi va bazaga qo'shildi",
+            "message_ru": "Найдено и добавлено в базу"
+        },
+        {
+            "id": "log_004",
+            "timestamp": "2025-01-21T16:30:00",
+            "status": "success",
+            "action": "ingest",
+            "title_uz": "VQ-123: Fermerlar uchun subsidiyalar",
+            "title_ru": "ПВ-123: Субсидии для фермеров",
+            "source": "lex.uz",
+            "relevance_score": 78,
+            "message_uz": "Topildi va bazaga qo'shildi",
+            "message_ru": "Найдено и добавлено в базу"
+        },
+        {
+            "id": "log_005",
+            "timestamp": "2025-01-21T16:25:00",
+            "status": "skipped",
+            "action": "filter",
+            "title_uz": "QQ-456: Davlat xizmatlari reglamenti",
+            "title_ru": "РК-456: Регламент госуслуг",
+            "source": "lex.uz",
+            "relevance_score": 23,
+            "message_uz": "Tadbirkorlikga aloqador emas - o'tkazib yuborildi",
+            "message_ru": "Не относится к предпринимательству - пропущено"
+        }
+    ],
+    "stats": {
+        "total_scanned": 47,
+        "total_ingested": 32,
+        "last_scan": "2025-01-21T16:40:00",
+        "new_this_week": 12
+    }
+}

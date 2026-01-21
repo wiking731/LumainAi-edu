@@ -1,0 +1,240 @@
+{
+    "partners": [
+        {
+            "id": "p001",
+            "name": "Aliyev Sherzod Karimovich",
+            "type": "lawyer",
+            "photo": "/avatars/lawyer1.jpg",
+            "specializations": [
+                "tax",
+                "business",
+                "contract"
+            ],
+            "experience_years": 8,
+            "city": "Toshkent",
+            "phone": "+998901234567",
+            "email": "aliyev@advoai.uz",
+            "bio_uz": "8 yillik tajribaga ega soliq va biznes huquqi bo'yicha mutaxassis. 200+ mijozga xizmat ko'rsatgan. Toshkent Davlat Yuridik Universiteti bitiruvchisi.",
+            "bio_ru": "Специалист по налоговому и бизнес-праву с 8-летним опытом. Обслужил более 200 клиентов. Выпускник Ташкентского государственного юридического университета.",
+            "rating": 4.8,
+            "reviews_count": 127,
+            "consultations": 245,
+            "price_per_hour": 150000,
+            "languages": [
+                "uz",
+                "ru",
+                "en"
+            ],
+            "verified": true,
+            "created_at": "2024-06-15"
+        },
+        {
+            "id": "p002",
+            "name": "Karimova Nilufar Rustamovna",
+            "type": "accountant",
+            "photo": "/avatars/accountant1.jpg",
+            "specializations": [
+                "tax",
+                "accounting",
+                "audit"
+            ],
+            "experience_years": 5,
+            "city": "Toshkent",
+            "phone": "+998901234568",
+            "email": "karimova@advoai.uz",
+            "bio_uz": "Sertifikatlangan buxgalter. Soliq hisoboti va audit bo'yicha mutaxassis. Kichik va o'rta bizneslar bilan ishlash tajribasi.",
+            "bio_ru": "Сертифицированный бухгалтер. Специалист по налоговой отчетности и аудиту. Опыт работы с малым и средним бизнесом.",
+            "rating": 4.6,
+            "reviews_count": 89,
+            "consultations": 156,
+            "price_per_hour": 100000,
+            "languages": [
+                "uz",
+                "ru"
+            ],
+            "verified": true,
+            "created_at": "2024-08-20"
+        },
+        {
+            "id": "p003",
+            "name": "Rahimov Bobur Anvarovich",
+            "type": "lawyer",
+            "photo": "/avatars/lawyer2.jpg",
+            "specializations": [
+                "criminal",
+                "civil",
+                "family"
+            ],
+            "experience_years": 12,
+            "city": "Samarqand",
+            "phone": "+998901234569",
+            "email": "rahimov@advoai.uz",
+            "bio_uz": "12 yillik sudlanish tajribasi. Jinoyat va fuqarolik ishlari bo'yicha ekspert. Oliy Sudda ishlar olib borgan.",
+            "bio_ru": "12 лет судебной практики. Эксперт по уголовным и гражданским делам. Вёл дела в Верховном суде.",
+            "rating": 4.9,
+            "reviews_count": 203,
+            "consultations": 412,
+            "price_per_hour": 200000,
+            "languages": [
+                "uz",
+                "ru"
+            ],
+            "verified": true,
+            "created_at": "2024-03-10"
+        },
+        {
+            "id": "p004",
+            "name": "Valiyeva Malika Saidovna",
+            "type": "lawyer",
+            "photo": "/avatars/lawyer3.jpg",
+            "specializations": [
+                "family",
+                "divorce",
+                "alimony"
+            ],
+            "experience_years": 6,
+            "city": "Toshkent",
+            "phone": "+998901234570",
+            "email": "valiyeva@advoai.uz",
+            "bio_uz": "Oilaviy huquq bo'yicha mutaxassis. Ajralish va alimentlar masalalarida yuqori tajriba. Ayollar huquqlarini himoya qilish.",
+            "bio_ru": "Специалист по семейному праву. Большой опыт в делах о разводе и алиментах. Защита прав женщин.",
+            "rating": 4.7,
+            "reviews_count": 95,
+            "consultations": 178,
+            "price_per_hour": 120000,
+            "languages": [
+                "uz",
+                "ru"
+            ],
+            "verified": true,
+            "created_at": "2024-09-05"
+        },
+        {
+            "id": "p005",
+            "name": "Tursunov Bekzod Ulug'bekovich",
+            "type": "tax_consultant",
+            "photo": "/avatars/consultant1.jpg",
+            "specializations": [
+                "tax",
+                "customs",
+                "international"
+            ],
+            "experience_years": 10,
+            "city": "Buxoro",
+            "phone": "+998901234571",
+            "email": "tursunov@advoai.uz",
+            "bio_uz": "Soliq va bojxona maslahatchi. Xalqaro savdo va eksport-import operatsiyalari bo'yicha ekspert. 10 yillik tajriba.",
+            "bio_ru": "Налоговый и таможенный консультант. Эксперт по международной торговле и экспортно-импортным операциям. 10 лет опыта.",
+            "rating": 4.5,
+            "reviews_count": 67,
+            "consultations": 134,
+            "price_per_hour": 180000,
+            "languages": [
+                "uz",
+                "ru",
+                "en"
+            ],
+            "verified": true,
+            "created_at": "2024-07-22"
+        }
+    ],
+    "specializations": {
+        "tax": {
+            "uz": "Soliq",
+            "ru": "Налоги"
+        },
+        "business": {
+            "uz": "Biznes",
+            "ru": "Бизнес"
+        },
+        "contract": {
+            "uz": "Shartnoma",
+            "ru": "Договоры"
+        },
+        "criminal": {
+            "uz": "Jinoyat",
+            "ru": "Уголовное"
+        },
+        "civil": {
+            "uz": "Fuqarolik",
+            "ru": "Гражданское"
+        },
+        "family": {
+            "uz": "Oilaviy",
+            "ru": "Семейное"
+        },
+        "divorce": {
+            "uz": "Ajralish",
+            "ru": "Развод"
+        },
+        "alimony": {
+            "uz": "Alimentlar",
+            "ru": "Алименты"
+        },
+        "labor": {
+            "uz": "Mehnat",
+            "ru": "Трудовое"
+        },
+        "property": {
+            "uz": "Mulk",
+            "ru": "Имущество"
+        },
+        "accounting": {
+            "uz": "Buxgalteriya",
+            "ru": "Бухгалтерия"
+        },
+        "audit": {
+            "uz": "Audit",
+            "ru": "Аудит"
+        },
+        "customs": {
+            "uz": "Bojxona",
+            "ru": "Таможня"
+        },
+        "international": {
+            "uz": "Xalqaro",
+            "ru": "Международное"
+        }
+    },
+    "cities": [
+        {
+            "id": "tashkent",
+            "uz": "Toshkent",
+            "ru": "Ташкент"
+        },
+        {
+            "id": "samarkand",
+            "uz": "Samarqand",
+            "ru": "Самарканд"
+        },
+        {
+            "id": "bukhara",
+            "uz": "Buxoro",
+            "ru": "Бухара"
+        },
+        {
+            "id": "fergana",
+            "uz": "Farg'ona",
+            "ru": "Фергана"
+        },
+        {
+            "id": "andijan",
+            "uz": "Andijon",
+            "ru": "Андижан"
+        }
+    ],
+    "partner_types": {
+        "lawyer": {
+            "uz": "Yurist",
+            "ru": "Юрист"
+        },
+        "accountant": {
+            "uz": "Buxgalter",
+            "ru": "Бухгалтер"
+        },
+        "tax_consultant": {
+            "uz": "Soliq maslahatchi",
+            "ru": "Налоговый консультант"
+        }
+    }
+}
