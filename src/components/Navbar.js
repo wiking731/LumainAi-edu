@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import AppLauncher from './AppLauncher';
+import ThemeToggle from './ThemeToggle';
+import AuthModal from './AuthModal';
 
 const translations = {
     uz: {
@@ -11,6 +13,7 @@ const translations = {
         marketplace: "Yuristlar",
         partners: "Hamkorlar",
         login: "Kirish",
+        logout: "Chiqish",
     },
     ru: {
         home: "Главная",
@@ -18,6 +21,7 @@ const translations = {
         marketplace: "Юристы",
         partners: "Партнёры",
         login: "Войти",
+        logout: "Выйти",
     }
 };
 
@@ -26,6 +30,29 @@ export default function Navbar({ lang = 'uz' }) {
     const pathname = usePathname();
     const t = translations[lang];
     const [showLauncher, setShowLauncher] = useState(false);
+    const [showAuthModal, setShowAuthModal] = useState(false);
+    const [user, setUser] = useState(null);
+
+    // Load user from localStorage
+    useEffect(() => {
+        const stored = localStorage.getItem('advoai-user');
+        if (stored) {
+            try {
+                setUser(JSON.parse(stored));
+            } catch (e) {
+                console.error('Failed to parse user data');
+            }
+        }
+    }, []);
+
+    const handleAuth = (userData) => {
+        setUser(userData);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('advoai-user');
+        setUser(null);
+    };
 
     const navLinks = [
         { href: '/', label: t.home },
@@ -85,13 +112,28 @@ export default function Navbar({ lang = 'uz' }) {
                         </button>
                     </div>
 
-                    {/* Login Button */}
-                    <button
-                        className="btn btn-secondary btn-sm"
-                        onClick={() => router.push('/partners/register')}
-                    >
-                        {t.login}
-                    </button>
+                    {/* Theme Toggle */}
+                    <ThemeToggle />
+
+                    {/* User / Login Button */}
+                    {user ? (
+                        <div className="user-info">
+                            <span className="user-avatar">
+                                {user.role === 'hamkor' ? '👨‍⚖️' : '👤'}
+                            </span>
+                            <span className="user-name">{user.name}</span>
+                            <button className="logout-btn" onClick={handleLogout}>
+                                {t.logout}
+                            </button>
+                        </div>
+                    ) : (
+                        <button
+                            className="btn btn-secondary btn-sm"
+                            onClick={() => setShowAuthModal(true)}
+                        >
+                            {t.login}
+                        </button>
+                    )}
 
                     {/* App Launcher (9-dot) */}
                     <div className="app-launcher-wrapper">
@@ -115,6 +157,14 @@ export default function Navbar({ lang = 'uz' }) {
                     </div>
                 </div>
             </div>
+
+            {/* Auth Modal */}
+            <AuthModal
+                lang={lang}
+                isOpen={showAuthModal}
+                onClose={() => setShowAuthModal(false)}
+                onAuth={handleAuth}
+            />
 
             <style jsx>{`
                 .navbar {
@@ -273,8 +323,51 @@ export default function Navbar({ lang = 'uz' }) {
                     border-radius: 50%;
                 }
 
+                .user-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    padding: 0.375rem 0.75rem;
+                    background: var(--bg-tertiary);
+                    border-radius: 999px;
+                }
+
+                .user-avatar {
+                    font-size: 1rem;
+                }
+
+                .user-name {
+                    font-size: 0.875rem;
+                    font-weight: 500;
+                    color: var(--text-primary);
+                    max-width: 100px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .logout-btn {
+                    background: none;
+                    border: none;
+                    font-size: 0.75rem;
+                    color: var(--text-muted);
+                    cursor: pointer;
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 4px;
+                    transition: all 0.2s;
+                }
+
+                .logout-btn:hover {
+                    background: var(--danger-bg);
+                    color: var(--danger);
+                }
+
                 @media (max-width: 768px) {
                     .navbar-links {
+                        display: none;
+                    }
+
+                    .user-name {
                         display: none;
                     }
                 }

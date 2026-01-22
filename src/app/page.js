@@ -25,13 +25,13 @@ const modeLabels = {
   uz: {
     imtiyoz: "💰 Imtiyozlar (T-3)",
     contract: "📝 Shartnoma tahlili",
-    tos: "🔍 Blind Sign",
+    tos: "🔍 Shartlar tekshiruvi",
     legal: "⚖️ Umumiy maslahat"
   },
   ru: {
     imtiyoz: "💰 Льготы (T-3)",
     contract: "📝 Анализ договора",
-    tos: "🔍 Blind Sign",
+    tos: "🔍 Проверка условий",
     legal: "⚖️ Общая консультация"
   }
 };
@@ -283,7 +283,7 @@ function HomeContent() {
       <style jsx>{`
                 .app-container {
                     min-height: 100vh;
-                    background: linear-gradient(180deg, #fafbfc 0%, #f0f4ff 50%, #fafbfc 100%);
+                    background: var(--bg-primary);
                 }
 
                 .main-content {
@@ -304,7 +304,7 @@ function HomeContent() {
                     justify-content: space-between;
                     padding: 1rem 1.5rem;
                     border-bottom: 1px solid var(--border-light);
-                    background: white;
+                    background: var(--bg-secondary);
                 }
 
                 .mode-indicator {
@@ -317,7 +317,8 @@ function HomeContent() {
                     font-size: 0.875rem;
                     border: 1px solid var(--border-color);
                     border-radius: 8px;
-                    background: white;
+                    background: var(--bg-secondary);
+                    color: var(--text-primary);
                     cursor: pointer;
                 }
 
@@ -405,14 +406,14 @@ function HomeContent() {
 
                 .chat-input-bar {
                     padding: 1rem 1.5rem 1.5rem;
-                    background: linear-gradient(to top, white 90%, transparent);
+                    background: linear-gradient(to top, var(--bg-primary) 90%, transparent);
                 }
 
                 .chat-input-bar form {
                     display: flex;
                     align-items: flex-end;
                     gap: 0.75rem;
-                    background: white;
+                    background: var(--bg-secondary);
                     border: 2px solid var(--border-color);
                     border-radius: 24px;
                     padding: 0.75rem;
@@ -476,8 +477,7 @@ export default function Home() {
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(180deg, #fafbfc 0%, #f0f4ff 100%)'
+        justifyContent: 'center'
       }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚖️</div>

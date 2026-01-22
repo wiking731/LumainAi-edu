@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import ToolsMenu from './ToolsMenu';
+import ModelSelector from './ModelSelector';
+import FileUpload from './FileUpload';
 
 const translations = {
     uz: {
@@ -10,7 +13,8 @@ const translations = {
             "Ish beruvchi meni ogohlantirmasdan ishdan bo'shatdi",
             "Bu shartnomani tekshirib bering"
         ],
-        powered: "Gemini + Groq AI asosida"
+        powered: "Gemini + Groq AI asosida",
+        tools: "Vositalar"
     },
     ru: {
         placeholder: "Напишите ваш юридический вопрос...",
@@ -19,32 +23,59 @@ const translations = {
             "Работодатель уволил меня без предупреждения",
             "Проверьте этот договор"
         ],
-        powered: "На основе Gemini + Groq AI"
+        powered: "На основе Gemini + Groq AI",
+        tools: "Инструменты"
+    }
+};
+
+const modeInfo = {
+    uz: {
+        imtiyoz: { icon: '💰', label: 'Imtiyozlar' },
+        contract: { icon: '📝', label: 'Shartnoma' },
+        tos: { icon: '🔍', label: 'Shartlar' },
+        legal: { icon: '⚖️', label: 'Umumiy' }
+    },
+    ru: {
+        imtiyoz: { icon: '💰', label: 'Льготы' },
+        contract: { icon: '📝', label: 'Договор' },
+        tos: { icon: '🔍', label: 'Условия' },
+        legal: { icon: '⚖️', label: 'Общее' }
     }
 };
 
 export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) {
     const [input, setInput] = useState('');
     const [isFocused, setIsFocused] = useState(false);
+    const [showTools, setShowTools] = useState(false);
+    const [model, setModel] = useState('llama');
+    const [fileContent, setFileContent] = useState(null);
+    const [fileName, setFileName] = useState(null);
+    const [fileError, setFileError] = useState(null);
     const textareaRef = useRef(null);
     const t = translations[lang];
+    const currentModeInfo = modeInfo[lang][mode] || modeInfo[lang].legal;
 
     // Auto-resize textarea
     useEffect(() => {
         const textarea = textareaRef.current;
         if (textarea) {
             textarea.style.height = 'auto';
-            const newHeight = Math.min(textarea.scrollHeight, 200); // max 200px
+            const newHeight = Math.min(textarea.scrollHeight, 200);
             textarea.style.height = newHeight + 'px';
         }
     }, [input]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (input.trim()) {
-            onSubmit(input.trim());
+        const textToSubmit = fileContent
+            ? `[Fayl: ${fileName}]\n\n${fileContent}\n\n${input}`
+            : input.trim();
+
+        if (textToSubmit) {
+            onSubmit(textToSubmit, model);
             setInput('');
-            // Reset height after submit
+            setFileContent(null);
+            setFileName(null);
             if (textareaRef.current) {
                 textareaRef.current.style.height = 'auto';
             }
@@ -52,7 +83,6 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
     };
 
     const handleKeyDown = (e) => {
-        // Submit on Enter without Shift
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSubmit(e);
@@ -62,6 +92,17 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
     const handleExampleClick = (example) => {
         setInput(example);
         textareaRef.current?.focus();
+    };
+
+    const handleFileContent = (content, name) => {
+        setFileContent(content);
+        setFileName(name);
+        setFileError(null);
+    };
+
+    const handleFileError = (error) => {
+        setFileError(error);
+        setTimeout(() => setFileError(null), 3000);
     };
 
     return (
@@ -75,30 +116,7 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
                     : "Юридический Помощник Узбекистана"}
             </p>
 
-            {/* Search Input */}
-            <form className={`hero-search ${isFocused ? 'focused' : ''}`} onSubmit={handleSubmit}>
-                <div className="search-icon">💬</div>
-                <textarea
-                    ref={textareaRef}
-                    className="search-input"
-                    placeholder={t.placeholder}
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
-                    rows={1}
-                />
-                <button
-                    type="submit"
-                    className="search-submit"
-                    disabled={!input.trim()}
-                >
-                    →
-                </button>
-            </form>
-
-            {/* Mode Pills */}
+            {/* Mode Pills (shown on landing) */}
             <div className="mode-pills">
                 <button
                     className={`mode-pill ${mode === 'imtiyoz' ? 'active' : ''}`}
@@ -116,7 +134,7 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
                     className={`mode-pill ${mode === 'tos' ? 'active' : ''}`}
                     onClick={() => onModeChange('tos')}
                 >
-                    🔍 Blind Sign
+                    🔍 {lang === 'uz' ? 'Shartlar tekshiruvi' : 'Проверка условий'}
                 </button>
                 <button
                     className={`mode-pill ${mode === 'legal' ? 'active' : ''}`}
@@ -125,6 +143,79 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
                     ⚖️ {lang === 'uz' ? 'Umumiy' : 'Общее'}
                 </button>
             </div>
+
+            {/* Gemini-style Input Box */}
+            <form className={`gemini-input-box ${isFocused ? 'focused' : ''}`} onSubmit={handleSubmit}>
+                {/* Row 1: Textarea */}
+                <div className="input-row-1">
+                    <textarea
+                        ref={textareaRef}
+                        className="gemini-textarea"
+                        placeholder={t.placeholder}
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={() => setIsFocused(false)}
+                        rows={1}
+                    />
+                </div>
+
+                {/* File Error */}
+                {fileError && (
+                    <div className="file-error">{fileError}</div>
+                )}
+
+                {/* Row 2: Tools & Send */}
+                <div className="input-row-2">
+                    <div className="input-tools-left">
+                        {/* File Upload */}
+                        <FileUpload
+                            lang={lang}
+                            onFileContent={handleFileContent}
+                            onError={handleFileError}
+                        />
+
+                        {/* Tools Dropdown Button */}
+                        <div className="tools-wrapper">
+                            <button
+                                type="button"
+                                className="tools-btn"
+                                onClick={() => setShowTools(!showTools)}
+                            >
+                                <span className="tools-icon">🔧</span>
+                                <span className="tools-label">{currentModeInfo.icon} {currentModeInfo.label}</span>
+                                <span className="tools-arrow">▾</span>
+                            </button>
+                            {showTools && (
+                                <ToolsMenu
+                                    lang={lang}
+                                    currentMode={mode}
+                                    onModeChange={onModeChange}
+                                    onClose={() => setShowTools(false)}
+                                />
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="input-tools-right">
+                        {/* Model Selector */}
+                        <ModelSelector
+                            currentModel={model}
+                            onModelChange={setModel}
+                        />
+
+                        {/* Send Button */}
+                        <button
+                            type="submit"
+                            className="send-btn"
+                            disabled={!input.trim() && !fileContent}
+                        >
+                            →
+                        </button>
+                    </div>
+                </div>
+            </form>
 
             {/* Example Queries */}
             <div className="hero-examples">
@@ -198,78 +289,7 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
                 .hero-subtitle-large {
                     font-size: 1.25rem;
                     color: var(--text-secondary);
-                    margin-bottom: 2.5rem;
-                }
-
-                .hero-search {
-                    display: flex;
-                    align-items: flex-end;
-                    width: 100%;
-                    max-width: 640px;
-                    background: white;
-                    border: 2px solid var(--border-color);
-                    border-radius: 28px;
-                    padding: 0.75rem 0.75rem 0.75rem 1.5rem;
-                    box-shadow: var(--shadow-lg);
-                    transition: all 0.3s ease;
-                }
-
-                .hero-search.focused {
-                    border-color: var(--accent-primary);
-                    box-shadow: var(--shadow-lg), 0 0 0 4px rgba(99, 102, 241, 0.1);
-                }
-
-                .search-icon {
-                    font-size: 1.25rem;
-                    margin-right: 0.75rem;
-                    margin-bottom: 0.5rem;
-                    align-self: flex-start;
-                    padding-top: 0.25rem;
-                }
-
-                .search-input {
-                    flex: 1;
-                    border: none;
-                    outline: none;
-                    font-size: 1.125rem;
-                    font-family: inherit;
-                    background: transparent;
-                    color: var(--text-primary);
-                    resize: none;
-                    min-height: 28px;
-                    max-height: 200px;
-                    overflow-y: auto;
-                    line-height: 1.5;
-                    padding: 0;
-                }
-
-                .search-input::placeholder {
-                    color: var(--text-muted);
-                }
-
-                .search-submit {
-                    width: 48px;
-                    height: 48px;
-                    background: var(--accent-gradient);
-                    border: none;
-                    border-radius: 50%;
-                    color: white;
-                    font-size: 1.5rem;
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    transition: all 0.2s;
-                    box-shadow: var(--accent-glow);
-                }
-
-                .search-submit:hover:not(:disabled) {
-                    transform: scale(1.05);
-                }
-
-                .search-submit:disabled {
-                    opacity: 0.5;
-                    cursor: not-allowed;
+                    margin-bottom: 1.5rem;
                 }
 
                 .mode-pills {
@@ -277,7 +297,6 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
                     flex-wrap: wrap;
                     justify-content: center;
                     gap: 0.75rem;
-                    margin-top: 1.5rem;
                     margin-bottom: 2rem;
                 }
 
@@ -286,7 +305,7 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
                     font-size: 0.9375rem;
                     font-weight: 500;
                     color: var(--text-secondary);
-                    background: white;
+                    background: var(--bg-secondary);
                     border: 1px solid var(--border-color);
                     border-radius: 9999px;
                     cursor: pointer;
@@ -307,7 +326,141 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
                     box-shadow: var(--accent-glow);
                 }
 
+                /* Gemini-style Input Box */
+                .gemini-input-box {
+                    width: 100%;
+                    max-width: 700px;
+                    background: var(--bg-secondary);
+                    border: 2px solid var(--border-color);
+                    border-radius: 24px;
+                    padding: 1rem;
+                    transition: all 0.3s ease;
+                    box-shadow: var(--shadow-lg);
+                }
+
+                .gemini-input-box.focused {
+                    border-color: var(--accent-primary);
+                    box-shadow: var(--shadow-lg), 0 0 0 4px rgba(99, 102, 241, 0.1);
+                }
+
+                .input-row-1 {
+                    padding: 0 0.5rem;
+                }
+
+                .gemini-textarea {
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    font-size: 1.125rem;
+                    font-family: inherit;
+                    background: transparent;
+                    color: var(--text-primary);
+                    resize: none;
+                    min-height: 28px;
+                    max-height: 200px;
+                    overflow-y: auto;
+                    line-height: 1.5;
+                    padding: 0.5rem 0;
+                }
+
+                .gemini-textarea::placeholder {
+                    color: var(--text-muted);
+                }
+
+                .file-error {
+                    padding: 0.5rem 0.75rem;
+                    margin: 0.5rem 0;
+                    background: var(--danger-bg);
+                    color: var(--danger);
+                    border-radius: 8px;
+                    font-size: 0.875rem;
+                }
+
+                .input-row-2 {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-top: 0.75rem;
+                    border-top: 1px solid var(--border-light);
+                    margin-top: 0.75rem;
+                }
+
+                .input-tools-left {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+
+                .input-tools-right {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                }
+
+                .tools-wrapper {
+                    position: relative;
+                }
+
+                .tools-btn {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.375rem;
+                    padding: 0.5rem 0.75rem;
+                    background: transparent;
+                    border: 1px solid var(--border-color);
+                    border-radius: 8px;
+                    font-size: 0.875rem;
+                    color: var(--text-secondary);
+                    cursor: pointer;
+                    transition: all 0.15s ease;
+                }
+
+                .tools-btn:hover {
+                    background: var(--bg-hover);
+                    border-color: var(--accent-primary);
+                }
+
+                .tools-icon {
+                    font-size: 1rem;
+                }
+
+                .tools-label {
+                    font-weight: 500;
+                }
+
+                .tools-arrow {
+                    font-size: 0.625rem;
+                    opacity: 0.6;
+                }
+
+                .send-btn {
+                    width: 44px;
+                    height: 44px;
+                    background: var(--accent-gradient);
+                    border: none;
+                    border-radius: 50%;
+                    color: white;
+                    font-size: 1.25rem;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.2s;
+                    box-shadow: var(--accent-glow);
+                }
+
+                .send-btn:hover:not(:disabled) {
+                    transform: scale(1.05);
+                }
+
+                .send-btn:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+
+                /* Examples */
                 .hero-examples {
+                    margin-top: 2rem;
                     margin-bottom: 2rem;
                 }
 
@@ -373,18 +526,21 @@ export default function ChatHero({ lang = 'uz', mode, onSubmit, onModeChange }) 
                         font-size: 2.5rem;
                     }
 
-                    .hero-search {
-                        padding: 0.375rem 0.375rem 0.375rem 1rem;
+                    .gemini-input-box {
+                        padding: 0.75rem;
                     }
 
-                    .search-input {
+                    .gemini-textarea {
                         font-size: 1rem;
                     }
 
-                    .search-submit {
+                    .tools-label {
+                        display: none;
+                    }
+
+                    .send-btn {
                         width: 40px;
                         height: 40px;
-                        font-size: 1.25rem;
                     }
                 }
             `}</style>

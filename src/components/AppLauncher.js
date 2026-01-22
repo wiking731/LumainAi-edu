@@ -10,7 +10,7 @@ const translations = {
             { id: 'chat', icon: '🤖', label: 'AI Chat', href: '/', description: 'Huquqiy maslahat' },
             { id: 'imtiyoz', icon: '💰', label: 'Imtiyozlar', href: '/?mode=imtiyoz', description: 'Subsidiyalar (T-3)' },
             { id: 'contract', icon: '📝', label: 'Shartnoma', href: '/?mode=contract', description: 'Xavf tahlili' },
-            { id: 'blindsign', icon: '🔍', label: 'Blind Sign', href: '/?mode=tos', description: 'ToS tekshiruvi' },
+            { id: 'shartlar', icon: '🔍', label: 'Shartlar', href: '/?mode=tos', description: 'Shartlar tekshiruvi' },
             { id: 'marketplace', icon: '👨‍⚖️', label: 'Yuristlar', href: '/marketplace', description: 'Mutaxassislar' },
             { id: 'register', icon: '🤝', label: 'Hamkorlik', href: '/partners/register', description: "Ro'yxatdan o'tish" },
         ]
@@ -21,7 +21,7 @@ const translations = {
             { id: 'chat', icon: '🤖', label: 'AI Чат', href: '/', description: 'Юридическая помощь' },
             { id: 'imtiyoz', icon: '💰', label: 'Льготы', href: '/?mode=imtiyoz', description: 'Субсидии (T-3)' },
             { id: 'contract', icon: '📝', label: 'Договор', href: '/?mode=contract', description: 'Анализ рисков' },
-            { id: 'blindsign', icon: '🔍', label: 'Blind Sign', href: '/?mode=tos', description: 'Проверка ToS' },
+            { id: 'shartlar', icon: '🔍', label: 'Условия', href: '/?mode=tos', description: 'Проверка условий' },
             { id: 'marketplace', icon: '👨‍⚖️', label: 'Юристы', href: '/marketplace', description: 'Специалисты' },
             { id: 'register', icon: '🤝', label: 'Партнёрство', href: '/partners/register', description: 'Регистрация' },
         ]

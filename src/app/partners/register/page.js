@@ -146,7 +146,7 @@ function RegisterContent() {
                 <style jsx>{`
                     .register-container {
                         min-height: 100vh;
-                        background: linear-gradient(180deg, #fafbfc 0%, #f0f4ff 50%, #fafbfc 100%);
+                        background: var(--bg-primary);
                     }
                     .success-screen {
                         display: flex;
@@ -326,7 +326,7 @@ function RegisterContent() {
             <style jsx>{`
                 .register-container {
                     min-height: 100vh;
-                    background: linear-gradient(180deg, #fafbfc 0%, #f0f4ff 50%, #fafbfc 100%);
+                    background: var(--bg-primary);
                 }
 
                 .register-main {
@@ -336,7 +336,7 @@ function RegisterContent() {
                 }
 
                 .register-card {
-                    background: white;
+                    background: var(--bg-secondary);
                     border-radius: 24px;
                     padding: 2.5rem;
                     box-shadow: var(--shadow-xl);
@@ -395,7 +395,8 @@ function RegisterContent() {
                     font-size: 1rem;
                     border: 2px solid var(--border-color);
                     border-radius: 12px;
-                    background: white;
+                    background: var(--bg-secondary);
+                    color: var(--text-primary);
                     transition: all 0.2s;
                 }
 

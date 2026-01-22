@@ -216,7 +216,7 @@ function MarketplaceContent() {
             <style jsx>{`
                 .marketplace-container {
                     min-height: 100vh;
-                    background: linear-gradient(180deg, #fafbfc 0%, #f0f4ff 50%, #fafbfc 100%);
+                    background: var(--bg-primary);
                 }
 
                 .marketplace-main {
@@ -250,7 +250,7 @@ function MarketplaceContent() {
                     gap: 1rem;
                     margin-bottom: 2rem;
                     padding: 1.5rem;
-                    background: white;
+                    background: var(--bg-secondary);
                     border-radius: 16px;
                     box-shadow: var(--shadow-md);
                 }
@@ -280,7 +280,8 @@ function MarketplaceContent() {
                     font-size: 0.875rem;
                     border: 1px solid var(--border-color);
                     border-radius: 12px;
-                    background: white;
+                    background: var(--bg-secondary);
+                    color: var(--text-primary);
                     cursor: pointer;
                     min-width: 150px;
                 }
@@ -292,7 +293,7 @@ function MarketplaceContent() {
                 }
 
                 .partner-card {
-                    background: white;
+                    background: var(--bg-secondary);
                     border-radius: 20px;
                     padding: 1.5rem;
                     box-shadow: var(--shadow-card);

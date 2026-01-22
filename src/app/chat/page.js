@@ -29,7 +29,7 @@ const translations = {
 
         // ToS mode
         tosTitle: "Shartnoma Tekshiruvi",
-        tosSubtitle: "Blind Sign Himoyachisi",
+        tosSubtitle: "Shartlar himoyachisi",
         tosPlaceholder: "Shartnoma yoki maxfiylik siyosati matnini kiriting...",
         tosWelcome: "Salom! 🛡️",
         tosWelcomeSubtitle: "Shartnoma yoki maxfiylik siyosati matnini kiriting - men yashirin xavflarni topib, xavf darajasini baholayman.",
@@ -66,7 +66,7 @@ const translations = {
 
         // ToS mode
         tosTitle: "Проверка Договоров",
-        tosSubtitle: "Blind Sign Защитник",
+        tosSubtitle: "Защитник условий",
         tosPlaceholder: "Вставьте текст договора или политики конфиденциальности...",
         tosWelcome: "Привет! 🛡️",
         tosWelcomeSubtitle: "Вставьте текст договора или политики конфиденциальности - я найду скрытые риски и оценю уровень опасности.",

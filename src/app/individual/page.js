@@ -16,7 +16,7 @@ const translations = {
         feature1Examples: ["Ish beruvchi bilan nizolar", "Qo'shni bilan muammolar", "Oilaviy masalalar", "Iste'molchi huquqlari"],
 
         feature2Title: "Shartnoma Tekshiruvi",
-        feature2Subtitle: "\"Blind Sign\" Himoyachisi",
+        feature2Subtitle: "Shartlar himoyachisi",
         feature2Desc: "Ko'p odamlar o'qimay \"Roziman\" tugmasini bosishadi. Men shartnoma va maxfiylik siyosatlarini tahlil qilib, yashirin xavflarni topaman.",
         feature2Examples: ["Foydalanish shartlari", "Maxfiylik siyosati", "Ilova shartnomalarl", "Onlayn xizmatlar"],
 
@@ -36,7 +36,7 @@ const translations = {
         feature1Examples: ["Споры с работодателем", "Проблемы с соседями", "Семейные вопросы", "Права потребителей"],
 
         feature2Title: "Проверка Договоров",
-        feature2Subtitle: "\"Blind Sign\" Защитник",
+        feature2Subtitle: "Защитник условий",
         feature2Desc: "Многие нажимают \"Согласен\" не читая. Я анализирую договоры и политики конфиденциальности, находя скрытые риски.",
         feature2Examples: ["Условия использования", "Политика конфиденциальности", "Договоры приложений", "Онлайн-сервисы"],
 
@@ -61,7 +61,7 @@ function IndividualContent() {
     };
 
     return (
-        <div className="landing-container" style={{ background: 'linear-gradient(180deg, #fafbfc 0%, #f0f4ff 50%, #fafbfc 100%)' }}>
+        <div className="landing-container" style={{ background: 'var(--bg-primary)' }}>
             <main className="hero" style={{ maxWidth: 1100 }}>
                 {/* Header */}
                 <div style={{

@@ -1,30 +1,44 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin", "cyrillic"],
-  display: 'swap',
-  variable: '--font-inter'
-});
+import './globals.css';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 export const metadata = {
-  title: "Advo AI - Huquqiy Yordamchi | Правовой Помощник",
-  description: "O'zbekistonning eng ilg'or raqamli huquqiy advokati. Shartnomalar tahlili, iste'molchi huquqlari himoyasi. Самый передовой цифровой юридический адвокат Узбекистана.",
-  keywords: "huquqiy yordam, advokat, shartnoma tahlili, iste'molchi huquqi, Uzbekistan, O'zbekiston, юрист, права потребителей",
-  authors: [{ name: "Advo AI" }],
-  openGraph: {
-    title: "Advo AI - Huquqiy Yordamchi",
-    description: "O'zbekistonning eng ilg'or raqamli huquqiy advokati",
-    type: "website",
-  },
+    title: 'Advo AI - Huquqiy Yordamchi | Правовой Помощник',
+    description: "O'zbekiston uchun AI-asosida huquqiy yordamchi. Huquqiy maslahat, shartnoma tahlili, imtiyozlar.",
+    keywords: 'advokat, yurist, huquq, qonun, maslahatchisi, legal, lawyer, uzbekistan, AI',
+    openGraph: {
+        title: 'Advo AI - Huquqiy Yordamchi',
+        description: "O'zbekiston uchun AI-asosida huquqiy yordamchi",
+        type: 'website',
+        locale: 'uz_UZ',
+    },
 };
 
 export default function RootLayout({ children }) {
-  return (
-    <html lang="uz">
-      <body className={inter.className}>
-        {children}
-      </body>
-    </html>
-  );
+    return (
+        <html lang="uz" suppressHydrationWarning>
+            <head>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('advoai-theme');
+                  if (theme) {
+                    document.documentElement.setAttribute('data-theme', theme);
+                  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+                    }}
+                />
+            </head>
+            <body>
+                <ThemeProvider>
+                    {children}
+                </ThemeProvider>
+            </body>
+        </html>
+    );
 }

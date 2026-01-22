@@ -3,6 +3,7 @@
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
+import ContactProtection from '@/components/ContactProtection';
 import lawyersData from '@/data/lawyers.json';
 
 const translations = {
@@ -71,7 +72,7 @@ function PartnerProfileContent() {
                 <style jsx>{`
                     .profile-container {
                         min-height: 100vh;
-                        background: linear-gradient(180deg, #fafbfc 0%, #f0f4ff 100%);
+                        background: var(--bg-primary);
                     }
                     .not-found {
                         display: flex;
@@ -177,27 +178,17 @@ function PartnerProfileContent() {
                             </div>
                         </div>
 
-                        {/* Contact */}
-                        <div className="section contact-section">
+                        {/* Contact - Protected with blur */}
+                        <div className="section">
                             <h3>{t.contact}</h3>
-                            <div className="contact-info">
-                                <div className="contact-item">
-                                    <span className="label">{t.phone}:</span>
-                                    <a href={`tel:${partner.phone}`}>{partner.phone}</a>
-                                </div>
-                                {partner.email && (
-                                    <div className="contact-item">
-                                        <span className="label">{t.email}:</span>
-                                        <a href={`mailto:${partner.email}`}>{partner.email}</a>
-                                    </div>
-                                )}
-                            </div>
+                            <ContactProtection
+                                lang={lang}
+                                phone={partner.phone}
+                                email={partner.email}
+                                name={partner.name}
+                                pricePerHour={partner.price_per_hour}
+                            />
                         </div>
-
-                        {/* CTA */}
-                        <a href={`tel:${partner.phone}`} className="hire-btn-large">
-                            📞 {t.hire}
-                        </a>
                     </div>
                 </div>
             </main>
@@ -205,7 +196,7 @@ function PartnerProfileContent() {
             <style jsx>{`
                 .profile-container {
                     min-height: 100vh;
-                    background: linear-gradient(180deg, #fafbfc 0%, #f0f4ff 100%);
+                    background: var(--bg-primary);
                 }
 
                 .profile-main {
@@ -234,7 +225,7 @@ function PartnerProfileContent() {
                 }
 
                 .profile-card {
-                    background: white;
+                    background: var(--bg-secondary);
                     border-radius: 24px;
                     overflow: hidden;
                     box-shadow: var(--shadow-xl);
@@ -252,7 +243,7 @@ function PartnerProfileContent() {
                 .avatar-large {
                     width: 100px;
                     height: 100px;
-                    background: white;
+                    background: var(--bg-secondary);
                     border-radius: 24px;
                     display: flex;
                     align-items: center;

@@ -91,6 +91,61 @@
   --header-height: 72px;
 }
 
+/* --- Dark Theme --- */
+[data-theme="dark"] {
+  /* Dark Color Palette */
+  --bg-primary: #0f0f23;
+  --bg-secondary: #1a1b26;
+  --bg-tertiary: #24283b;
+  --bg-hover: #2a2e42;
+  --bg-accent: linear-gradient(135deg, #7aa2f7 0%, #bb9af7 100%);
+  --bg-accent-soft: linear-gradient(135deg, rgba(122, 162, 247, 0.15) 0%, rgba(187, 154, 247, 0.15) 100%);
+
+  /* Accent Colors - Softer for dark mode */
+  --accent-primary: #7aa2f7;
+  --accent-secondary: #bb9af7;
+  --accent-tertiary: #c0caf5;
+  --accent-gradient: linear-gradient(135deg, #7aa2f7 0%, #bb9af7 50%, #c0caf5 100%);
+  --accent-gradient-soft: linear-gradient(135deg, rgba(122, 162, 247, 0.2) 0%, rgba(187, 154, 247, 0.2) 100%);
+  --accent-glow: 0 8px 32px rgba(122, 162, 247, 0.3);
+  --accent-glow-strong: 0 12px 48px rgba(122, 162, 247, 0.4);
+
+  /* Status Colors - Adjusted for dark bg */
+  --success: #9ece6a;
+  --success-light: #1a2e1a;
+  --success-bg: rgba(158, 206, 106, 0.15);
+  --warning: #e0af68;
+  --warning-light: #2e2a1a;
+  --warning-bg: rgba(224, 175, 104, 0.15);
+  --danger: #f7768e;
+  --danger-light: #2e1a1a;
+  --danger-bg: rgba(247, 118, 142, 0.15);
+  --info: #7dcfff;
+  --info-light: #1a2a2e;
+  --info-bg: rgba(125, 207, 255, 0.15);
+
+  /* Text Colors */
+  --text-primary: #c0caf5;
+  --text-secondary: #a9b1d6;
+  --text-muted: #565f89;
+  --text-accent: #7aa2f7;
+  --text-on-accent: #1a1b26;
+
+  /* Borders */
+  --border-color: #414868;
+  --border-light: #32364a;
+  --border-focus: #7aa2f7;
+
+  /* Shadows - Darker */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.2), 0 6px 16px rgba(0, 0, 0, 0.3);
+  --shadow-float: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
 /* --- Reset & Base --- */
 *,
 *::before,
@@ -736,7 +791,7 @@ h4 {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #fafbfc 0%, #f0f4ff 100%);
+  background: var(--bg-primary);
 }
 
 .hero {

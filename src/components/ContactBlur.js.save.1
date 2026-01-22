@@ -1,0 +1,289 @@
+/'use client';
+
+import { useState } from 'react';
+
+// Uzbek phone number patterns
+const PHONE_PATTERNS = [
+    /\+998[\s-]?\d{2}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}/g, // +998 XX XXX XX XX
+    /998\d{9}/g, // 998XXXXXXXXX
+    /\d{2}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}/g, // XX XXX XX XX (local)
+];
+
+// Social media patterns
+const SOCIAL_PATTERNS = [
+    /@[\w._]+/g, // @username (Telegram, Instagram)
+    /t\.me\/[\w._]+/gi, // t.me/username
+    /instagram\.com\/[\w._]+/gi, // instagram.com/username
+];
+
+// Email pattern
+const EMAIL_PATTERN = /[\w.-]+@[\w.-]+\.\w+/g;
+
+// Combine all patterns for detection
+function detectContactInfo(text) {
+    const contacts = [];
+
+    // Detect phones
+    PHONE_PATTERNS.forEach(pattern => {
+        const matches = text.match(pattern);
+        if (matches) {
+            matches.forEach(match => contacts.push({ type: 'phone', value: match }));
+        }
+    });
+
+    // Detect social
+    SOCIAL_PATTERNS.forEach(pattern => {
+        const matches = text.match(pattern);
+        if (matches) {
+            matches.forEach(match => contacts.push({ type: 'social', value: match }));
+        }
+    });
+
+    // Detect emails
+    const emailMatches = text.match(EMAIL_PATTERN);
+    if (emailMatches) {
+        emailMatches.forEach(match => contacts.push({ type: 'email', value: match }));
+    }
+
+    return contacts;
+}
+
+// Replace contact info with blurred/protected version
+export function protectContacts(text, isProtected = true) {
+    if (!isProtected) return text;
+
+    let protected = text;
+
+    // Replace phone numbers
+    PHONE_PATTERNS.forEach(pattern => {
+        protected = protected.replace(pattern, '📞 ••• ••• •• ••');
+    });
+
+    // Replace social handles
+    SOCIAL_PATTERNS.forEach(pattern => {
+        protected = protected.replace(pattern, '📲 @•••••••');
+    });
+
+    // Replace emails
+    protected = protected.replace(EMAIL_PATTERN, '📧 ••••@••••.••');
+
+    return protected;
+}
+
+export default function ContactBlur({
+    children,
+    text = '',
+    isPremium = false,
+    lang = 'uz'
+}) {
+    const [showModal, setShowModal] = useState(false);
+
+    const t = {
+        uz: {
+            title: "Bu ma'lumot himoyalangan",
+            subtitle: "Aloqa ma'lumotlarini ko'rish uchun Premium rejimga o'ting",
+            feature1: "Barcha telefon raqamlar ochiq",
+            feature2: "Ijtimoiy tarmoq havololari",
+            feature3: "Cheklovsiz yuristlarga murojaat",
+            getPremium: "Premium olish",
+            close: "Yopish",
+            demo: "Demo: Bu funksiya yakuniy versiyada ishlaydi"
+        },
+        ru: {
+            title: "Информация защищена",
+            subtitle: "Получите Premium для просмотра контактной информации",
+            feature1: "Все телефонные номера открыты",
+            feature2: "Ссылки на социальные сети",
+            feature3: "Неограниченные обращения к юристам",
+            getPremium: "Получить Premium",
+            close: "Закрыть",
+            demo: "Демо: Эта функция будет работать в финальной версии"
+        }
+    }[lang];
+
+    // Check if text contains contact info
+    const contacts = detectContactInfo(text);
+    const hasContacts = contacts.length > 0;
+
+    // If premium user or no contacts, render children normally
+    if (isPremium || !hasContacts) {
+        return <>{children}</>;
+    }
+
+    // For non-premium users with contacts, show blurred version
+    const handleClick = () => setShowModal(true);
+
+    return (
+        <>
+            <span
+                className="blurred-contact"
+                onClick={handleClick}
+                title={lang === 'uz' ? "Premium kerak" : "Требуется Premium"}
+            >
+                {children}
+            </span>
+
+            {showModal && (
+                <div className="premium-modal-overlay" onClick={() => setShowModal(false)}>
+                    <div className="premium-modal" onClick={e => e.stopPropagation()}>
+                        <div className="modal-icon">🔒</div>
+                        <h3>{t.title}</h3>
+                        <p className="modal-subtitle">{t.subtitle}</p>
+
+                        <ul className="features-list">
+                            <li>✓ {t.feature1}</li>
+                            <li>✓ {t.feature2}</li>
+                            <li>✓ {t.feature3}</li>
+                        </ul>
+
+                        <div className="demo-note">
+                            ℹ️ {t.demo}
+                        </div>
+
+                        <div className="modal-actions">
+                            <button className="btn-close" onClick={() => setShowModal(false)}>
+                                {t.close}
+                            </button>
+                            <button className="btn-premium">
+                                {t.getPremium} ⭐
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <style jsx>{`
+        .blurred-contact {
+          filter: blur(4px);
+          cursor: pointer;
+          transition: filter 0.2s;
+          display: inline-block;
+          user-select: none;
+          padding: 0.125rem 0.25rem;
+          background: var(--bg-tertiary);
+          border-radius: 4px;
+        }
+
+        .blurred-contact:hover {
+          filter: blur(3px);
+          background: var(--warning-bg);
+        }
+
+        .premium-modal-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(8px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 3000;
+          animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .premium-modal {
+          width: 90%;
+          max-width: 400px;
+          background: var(--bg-secondary);
+          border-radius: 20px;
+          padding: 2rem;
+          text-align: center;
+          box-shadow: var(--shadow-xl);
+          animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+          from { transform: translateY(20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-icon {
+          font-size: 3rem;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-size: 1.25rem;
+          font-weight: 700;
+          margin: 0 0 0.5rem 0;
+          color: var(--text-primary);
+        }
+
+        .modal-subtitle {
+          color: var(--text-secondary);
+          font-size: 0.9375rem;
+          margin: 0 0 1.5rem 0;
+        }
+
+        .features-list {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 1.5rem 0;
+          text-align: left;
+        }
+
+        .features-list li {
+          padding: 0.5rem 0;
+          color: var(--text-primary);
+          font-size: 0.9375rem;
+          border-bottom: 1px solid var(--border-light);
+        }
+
+        .features-list li:last-child {
+          border-bottom: none;
+        }
+
+        .demo-note {
+          background: var(--info-bg);
+          color: var(--info);
+          padding: 0.75rem;
+          border-radius: 8px;
+          font-size: 0.8125rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .modal-actions {
+          display: flex;
+          gap: 0.75rem;
+        }
+
+        .btn-close,
+        .btn-premium {
+          flex: 1;
+          padding: 0.875rem 1rem;
+          font-size: 0.9375rem;
+          font-weight: 600;
+          border: none;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .btn-close {
+          background: var(--bg-tertiary);
+          color: var(--text-secondary);
+        }
+
+        .btn-close:hover {
+          background: var(--bg-hover);
+        }
+
+        .btn-premium {
+          background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+          color: white;
+          box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-premium:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+      `}</style>
+        </>
+    );
+}
